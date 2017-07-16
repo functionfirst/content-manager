@@ -1,0 +1,14 @@
+<div class="content">
+	<p>
+		You searched for <strong>{{globalSearch}}</strong>.<br />
+		<small class="text-muted">Found {{pages.length}} matches</small>
+	</p>
+
+	<ul ng-show="pages" class="page-list" ng-if="pages.length">		
+
+		<li ng-repeat="pg in pages | orderBy:'name'">
+			<a ng-href="/{{ pg.name }}">{{ pg.name }}
+			<small class="text-muted">Last modified: {{ pg.modified_at | date :  'HH:mm dd/MM/yyyy' }}</small></a>			
+		</li>
+	</ul>
+</div>

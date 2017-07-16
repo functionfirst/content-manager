@@ -1,0 +1,21 @@
+<article class="blog" ng-repeat="blog in blogs | limitTo:5">
+	<header>
+		<time pubdate="{{blog.created_at}}">{{blog.created_at | date: 'EEEE, MMMM dd, yyyy'}}</time>
+		<h1><a href="/blogs/{{blog.slug}}">{{blog.title}}</a></h1>
+	</header>
+
+	<section>
+		<div class="blog-content" ng-class="{'trim' : blog.content.length > 255 }" ng-bind-html="blog.content | limitTo : 255 | sanitize"></div>
+
+		<p class="blog-link" ng-if="blog.content.length > 255">
+			<a href="/blogs/{{blog.slug}}">Read more</a>
+		</p>
+	</section>
+
+	<footer>
+		<a href="/blogs/{{blog.slug}}#comments" class="pull-right">{{blog.comments.length}} Comments</a>
+
+
+		Posted by {{blog.author.name}} Alan at {{blog.created_at | date: 'hh:mm a'}}
+	</footer>
+</article>

@@ -1,0 +1,15 @@
+<div class="comment-box">
+	<label for="comment">{{comments.length}} comments</label>
+	
+	<form ng-if="user" ng-submit="addComment(this)">
+		<textarea id="comment" ng-model="comment" ng-disabled="processing" cols="30" class="form-control" rows="4" placeholder="Add a comment as {{user.name}}"></textarea>
+
+		<button type="submit" class="btn btn-default" ng-disabled="processing" ng-class="{'disabled' : processing}">Add Comment <img ng-if="processing" width="17" src="/assets/images/loader.svg"></button>
+	</form>
+
+	<div ng-if="!user">
+		<p class="text-muted">You must be <a href="/login">logged</a> in to leave a comment</p>
+	</div>
+</div>
+
+<comment id="comments user="user" ng-repeat="comment in comments | orderBy:'created_at'">

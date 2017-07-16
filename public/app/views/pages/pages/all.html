@@ -1,0 +1,22 @@
+<div class="content text-center" ng-if="main.user.admin">
+	<a href="/admin/users">Users</a> &bull;
+	<a href="/admin/pages">Pages</a> &bull;
+	<a href="/admin/blogs">Blogs</a>
+</div>
+
+<div class="content" ng-show="main.user.admin">
+	<h1>Pages</h1>
+
+	<p>
+		<input type="text" ng-model="search" class="form-control" placeholder="Search..." autofocus>
+	</p>
+
+	<ul ng-show="pages" class="page-list">
+		<li ng-repeat="pg in pages | orderBy:'name' | filter : search">
+			<a ng-href="/{{ pg.name }}">{{ pg.name }}
+			<small class="text-muted">Last modified: {{ pg.modified_at | date :  'HH:mm dd/MM/yyyy' }}</small></a>
+			
+			<button class="btn btn-link" ng-click="deletePage(pg._id)"><span class="glyphicon glyphicon-remove"></span></button>
+		</li>
+	</ul>
+</div>

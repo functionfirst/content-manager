@@ -1,0 +1,90 @@
+<!-- Page does not exist -->
+<!-- Page does not exist and IS an admin -->
+<div class="content" ng-if="!page.name" ng-cloak>
+	<h1>Page does not exist</h1>
+
+	<p>The page you requested could not be found.</p>
+
+	<!-- IS an admin -->
+	<p ng-if="main.user.admin">
+		<button ng-click="createPage()" class="btn btn-default btn-lg">Create this page</button>
+	</p>
+</div>
+
+<!-- Page DOES exist -->
+<div ng-if="page.name">
+	<!-- Prevent access -->
+	<div ng-if="page.admin_only && !main.user.admin">
+		<div class="content">
+			<h1>Access Restricted</h1>
+
+			<p>You do not have permission to view this page...</p>
+		</div>
+	</div>
+
+	<div ng-if="!page.admin_only || main.user.admin">
+		<div class="content" ng-class="{'admin-only': page.admin_only}">
+			<div ng-if="main.user.admin" class="pull-right">
+				<small class="text-muted">
+					<a class="btn btn-sm btn-danger active" href="#" ng-if="page.admin_only" ng-click="setAdminOnly(null)"><span class="glyphicon glyphicon-lock"></span></a>
+
+					<a class="btn btn-sm btn-warning" href="#" ng-if="!page.admin_only" ng-click="setAdminOnly(true)"><span class="glyphicon glyphicon-lock"></span></a>
+					
+					<a class="btn btn-sm btn-default" ng-if="page.parent" href="#" ng-click="clearParent()">Clear folder</a>
+
+					<a class="btn btn-sm btn-default" ng-if="!page.parent" ng-click="selectParent()" href="#">Add to folder</a>
+				</small>
+			</div>
+
+			<div class="content-path" ng-if="page.parent">
+	    		<span ng-repeat="parent in page.parent" ng-include="'breadcrumb'"></span>
+		    </div>
+
+			<!-- View access for users -->
+			<div ng-if="!main.user.admin" ng-bind-html="trustedHtml"></div>
+
+			<!-- Edit access for administrators -->
+			<editor
+				ng-if="main.user.admin"
+				ng-model="page.content"
+				ng-keyup="savePage()"
+				bind-options="mediumBindOptions"
+				data-placeholder="Enter your content..."></editor>
+		</div>
+
+		<script type="text/ng-template" id="breadcrumb">
+		    <!-- <a ng-if="parent.name === 'home'" href="/">Campaign</a> -->
+		    <!-- <a ng-if="parent.name !== 'home'" href="/{{ parent.name }}" ng-bind="parent.name"></a> -->
+		    <a href="/{{ parent.name }}" ng-bind="parent.name"></a>
+		    <span ng-repeat="parent in parent.parent" ng-include="'breadcrumb'"></span>
+		</script>
+
+		<!-- Comment Engine -->
+		<comments user="main.user" object="page" />
+
+		<!-- Modal for adding a page to a folder -->
+		<div class="modal fade" id="addToPageModal" tabindex="-1" role="dialog" aria-labelledby="addToPageLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content form-horizontal">
+		  			<div class="modal-header">
+		    			<button type="button" class="close" data-dismiss="modal" aria-label="Cancel"><span aria-hidden="true">&times;</span></button>
+		    			<h4 class="modal-title" id="addToPageLabel">Move to Page</h4>
+		  			</div>
+
+		  			<form ng-submit="addToPage()">
+			  			<div class="modal-body">
+			  				<input ng-model="searchText" id="searchText" placeholder="Search for parent page..." class="form-control">
+
+			  				<ul class="nav nav-pills nav-stacked" ng-repeat="page in page_list | orderBy:'name' | filter:searchText">
+			  					<li><a href="#" ng-click="selectPage(page)">{{page.name}}</a></li>
+			  				</ul>
+			  			</div>
+			  			<div class="modal-footer">
+				  			<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+			  			</div>
+		  			</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

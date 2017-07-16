@@ -1,0 +1,24 @@
+<article class="blog">
+
+	<div class="content-path">
+		<a href="/">Content Manager</a>
+    </div>
+
+	<header>
+		<time pubdate="{{blog.created_at}}">{{blog.created_at | date: 'EEEE, MMMM dd, yyyy'}}</time>
+
+		<h1>
+			<a class="pull-right" ng-if="main.user.admin" href="/admin/blogs/{{blog._id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+			{{blog.title}}
+		</h1>
+	</header>
+
+	<section ng-bind-html="trustedHtml"></section>
+
+	<footer>
+		Posted by {{blog.author.name}} Alan at {{blog.created_at | date: 'hh:mm a'}}
+	</footer>
+</article>
+
+<!-- Comment Engine -->
+<comments user="main.user" object="blog" />

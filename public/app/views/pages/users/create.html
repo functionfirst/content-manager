@@ -1,0 +1,49 @@
+<div class="content text-center" ng-if="main.user.admin">
+	<a href="/admin/users">Users</a> &bull;
+	<a href="/admin/pages">Pages</a>
+</div>
+
+<div class="content" ng-if="main.user.admin">
+	<ul class="breadcrumb">
+		<li><a href="/users">Users</a></li>
+		<li>Create User</li>
+	</ul>
+
+	<form class="form-horizontal" ng-submit="create()">
+		<div class="form-group">
+			<label class="col-sm-3 control-label">Name <span class="text-danger">*</span></label>
+
+			<div class="col-sm-9">
+				<input type="text" class="form-control" ng-model="user.name" required>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label">Email <span class="text-danger">*</span></label>
+			
+			<div class="col-sm-9">
+				<input type="text" class="form-control" ng-model="user.username" required>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label">Password <span class="text-danger">*</span></label>
+
+			<div class="col-sm-9">
+				<input type="password" class="form-control" ng-model="user.password" required>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label">Confirm Password <span class="text-danger">*</span></label>
+
+			<div class="col-sm-9">
+				<input type="password" class="form-control" ng-model="user.confirm_password" required>
+			</div>
+		</div>
+
+		<div class="col-md-offset-3">
+			<button type="submit" class="btn btn-primary">Create User</button>
+		</div>
+	</form>
+</div>

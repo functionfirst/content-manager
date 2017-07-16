@@ -1,0 +1,41 @@
+<div class="content text-center" ng-if="main.user.admin">
+	<a href="/admin/users">Users</a> &bull;
+	<a href="/admin/pages">Pages</a> &bull;
+	<a href="/admin/blogs">Blogs</a>
+</div>
+
+<div class="content" ng-if="main.user.admin">
+	<div class="row">
+		<div class="col-md-6">
+			<ul class="breadcrumb">
+				<li>Users</li>
+			</ul>
+		</div>
+		<div class="col-md-6">
+			<p class="text-right">
+				<a href="/admin/users/create" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> New User</a>
+			</p>
+		</div>
+	</div>
+
+	<table ng-show="users" cellspacing="0" cellpadding="0" width="100%" class="table">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Email</th>
+				<th class="text-center">Status</th>
+			</tr>
+		</thead>
+		<tbody ng-repeat="person in users">
+			<tr>
+				<td><a ng-href="/admin/users/{{ person._id }}">{{ person.name }}</a></td>
+				<td>{{ person.username }}</td>
+				<td class="text-center">
+					<span ng-show="person.blocked" class="label label-danger">Blocked</span>
+					<span ng-hide="person.blocked" class="label label-success">Active</span>
+					<span ng-show="person.admin" class="label label-default">Administrator</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
